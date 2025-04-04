@@ -36,7 +36,7 @@
       id="hero"
       class="hero w-100 h-100 mx-auto text-center d-flex justify-content-center align-items-center text-white">
       <main>
-        <h4>To father/mother/siblings/brothers,</h4>
+        <h4><span>To father/mother/siblings/brothers, </span></h4>
         <h1>Dimas & Rachel</h1>
         <p>Will hold a reception in:</p>
         <div class="simply-countdown simply-countdown-circle"></div>
@@ -162,6 +162,7 @@
               Address: Ritz-Carlton Jakarta <br />Kuningan, East Kuningan,
               Setiabudi, South Jakarta City, Jakarta
             </p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.8397357528374!2d106.8549103!3d-6.6667730999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c93e09a9bc8b%3A0x99827ad1136eef69!2sRuhiyat%20Barber%20shop!5e0!3m2!1sid!2sid!4v1743756985695!5m2!1sid!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             <a
               href="https://maps.app.goo.gl/gKdnW7afbvQHyi9u6"
               target="_blank"
@@ -428,6 +429,19 @@
       </div>
     </footer>
 
+
+    <!-- Music -->
+
+    <div class="audio-container">
+      <audio id="song" autoplay loop>
+        <source src="musik/safe-and-sound.mp3" type="audio/mp3">
+      </audio>
+
+      <div class="audio-icon-wrapper" style="display: none">
+        <i class="bi bi-pause-circle"></i>
+      </div>
+    <!-- Music -->
+
  <!-- Lightbox Bootstrap -->
 
  <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
@@ -481,6 +495,11 @@
 
     <script>
       const rootElement = document.querySelector(":root");
+      const audioIconWrapper = document.querySelector(".audio-icon-wrapper");
+      const audioIcon = document.querySelector(".audio-icon-wrapper i");
+      const song = document.querySelector("#song");
+      let isPlaying = false;
+
       function disableScroll() {
         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -495,11 +514,36 @@
       function enableScroll(){
         window.onscroll = function () {}
         rootElement.style.scrollBehavior = 'smooth';
-        localStorage.setItem('opened', 'true');
+        //localStorage.setItem('opened', 'true');
+        playAudio();
       }
 
-      if(!localStorage.getItem('opened')) {
-        disableScroll();}
+      function playAudio() {
+        
+        song.volume = 0.1;
+        audioIconWrapper.style.display = 'flex';
+        song.play();
+        isPlaying = true;
+      }
+
+      audioIconWrapper.onclick = function() {
+        if (isPlaying) {
+          song.pause();
+          audioIcon.classList.remove("bi-disc");
+          audioIcon.classList.add("bi-pause-circle");
+        } else {
+          song.play();
+          audioIcon.classList.add("bi-disc");
+          audioIcon.classList.remove("bi-pause-circle");
+        }
+
+        isPlaying = !isPlaying;
+      }
+
+      //if(!localStorage.getItem('opened')) {
+       //disableScroll();}
+
+       disableScroll();
 
     </script>
     <script>
@@ -519,6 +563,15 @@
   });
 });
 
+    </script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const nama = urlParams.get('n') || '';
+      const pronoun = urlParams.get('p') || 'to Father/Ibu/Saudara';
+      const namaContainer = document.querySelector(".hero h4 span");
+      namaContainer.innerText = `${pronoun} ${nama}`.replace(/ ,$/, ',');
+
+      document.querySelector('#nama').value = nama;
     </script>
   </body>
 </html>
